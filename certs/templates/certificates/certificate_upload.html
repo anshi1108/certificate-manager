@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Certificate</title>
+    <style>
+        /* Resetting some default browser styles */
+        body, h2, form, button {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            margin-top:70px;
+            margin-bottom:70px;
+        }
+
+        #certificate-upload-form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 450px; /* Reduced max width for better fit */
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            margin-top: 15px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        input[type="date"],
+        button {
+            padding: 8px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%; /* Full width for inputs and button */
+            box-sizing: border-box;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        input[type="date"] {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+            display: block;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+
+        .form-field label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            #certificate-upload-form {
+                padding: 15px;
+                max-width: 90%; /* Ensure the form fits on small screens */
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            input[type="text"],
+            input[type="file"],
+            input[type="date"],
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="certificate-upload-form">
+        <h2>Upload New Certificate</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="id_domain_name">Domain Name</label>
+                {{ form.domain_name }}
+                {% if form.domain_name.errors %}
+                    <div class="error-message">
+                        {% for error in form.domain_name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_owner">Owner</label>
+                {{ form.owner }}
+                {% if form.owner.errors %}
+                    <div class="error-message">
+                        {% for error in form.owner.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_private_key">Private Key</label>
+                {{ form.private_key }}
+                {% if form.private_key.errors %}
+                    <div class="error-message">
+                        {% for error in form.private_key.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_certificate">Certificate</label>
+                {{ form.certificate }}
+                {% if form.certificate.errors %}
+                    <div class="error-message">
+                        {% for error in form.certificate.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_notes">Notes</label>
+                {{ form.notes }}
+                {% if form.notes.errors %}
+                    <div class="error-message">
+                        {% for error in form.notes.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_expiry_date">Expiry Date</label>
+                {{ form.expiry_date }}
+                {% if form.expiry_date.errors %}
+                    <div class="error-message">
+                        {% for error in form.expiry_date.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</body>
+</html>
