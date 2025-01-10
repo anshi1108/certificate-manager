@@ -119,7 +119,7 @@
                 {% for certificate in certificates %}
                 <tr>
                     <td>{{ certificate.domain_name }}</td>
-                    <td>{{ certificate.owner }}</td>
+                    <td>{{ certificate.owner_email }}</td>
                     <td class="{{ certificate.expiry_color }}">
                         {{ certificate.expiry_date|date:"F j, Y" }}
                     </td>
