@@ -41,6 +41,11 @@ After downloading a Django project from GitHub, you need to set it up properly b
     >python manage.py runserver 0.0.0.0:8000
 
 
+***How to login once it is setup***
+
+The username and passwords for the cc admin and website admin can be found in the "credentials.json" sheet in the data directory
+certs/data/credentials.json
+
 
 ***What does this software do?***
 
