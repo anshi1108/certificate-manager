@@ -116,7 +116,7 @@
                 {% for certificate in certificates %}
                 <tr>
                     <td>{{ certificate.domain_name }}</td>  <!-- Certificate Name -->
-                    <td>{{ certificate.owner }}</td>  <!-- Certificate Owner -->
+                    <td>{{ certificate.owner_email }}</td>  <!-- Certificate Owner -->
                     <td class="{{ certificate.expiry_color }}">{{ certificate.expiry_date|date:"F j, Y" }}</td>  <!-- Expiry Date with color -->
                     <td>
                         <a href="{% url 'certificate_detail' certificate.id %}" class="action-link">View</a> |
