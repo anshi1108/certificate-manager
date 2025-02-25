@@ -64,6 +64,10 @@ This project is a centralized SSL Certificate Management System that allows:
 4. Integration of OpenSSL for automated expiry date extraction and validation.
 5. Secure centralized storage for certificates and private keys.
 6. Hosted on **cert.iitb.ac.in** and linked to IITB SSO.
+7. Automatic role assignment based on IITB SSO attributes:
+   - If the Organizational Unit (OU) is "cc," the user is assigned the **CC Admin** role.
+   - Otherwise, the email is used to filter certificates for **Website Admins**.
+   - Session variables store the assigned role and email for seamless access control.
 
 **Future Implementation:**
 1. Integration of DigiCert and GlobalSign API to automate the process.
