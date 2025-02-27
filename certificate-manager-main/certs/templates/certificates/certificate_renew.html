@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renew Certificate</title>
+    <style>
+        /* Resetting some default browser styles */
+        body, h1, form, button {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+            padding: 10px;
+            width: 95%;
+            margin: 2rem;
+        }
+
+        #certificate-renew-form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            box-sizing: border-box;
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            max-width: 95%;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        button {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%; /* Full width input fields */
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .file-name {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Inline checkbox styling */
+        .form-field-inline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 600px) {
+            #certificate-renew-form {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input[type="text"],
+            input[type="file"] {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="certificate-renew-form">
+        <h1>Renew Certificate for {{ certificate.domain_name }} (For Admin Use Only)</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-field">
+                <label for="id_private_key">Private Key</label>
+                <input type="file" name="private_key" id="id_private_key" value="{{ form.private_key.value }}" />
+                {% if form.private_key.value %}
+                    <div class="file-name">
+                        Current file: {{ form.private_key.value|slice:":100" }}
+                    </div>
+                {% endif %}
+                {% if form.private_key.errors %}
+                    <div class="error-message">
+                        {% for error in form.private_key.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_certificate_request">Certificate Request</label>
+                <input type="file" name="certificate_request" id="id_certificate_request" value="{{ form.certificate_request.value }}" />
+                {% if form.certificate_request.value %}
+                    <div class="file-name">
+                        Current file: {{ form.certificate_request.value|slice:":100" }}
+                    </div>
+                {% endif %}
+                {% if form.certificate_request.errors %}
+                    <div class="error-message">
+                        {% for error in form.certificate_request.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field">
+                <label for="id_renewed_certificate">Renewed Certificate</label>
+                <input type="file" name="renewed_certificate" id="id_renewed_certificate" value="{{ form.renewed_certificate.value }}" />
+                {% if form.renewed_certificate.value %}
+                    <div class="file-name">
+                        Current file: {{ form.renewed_certificate.value|slice:":100" }}
+                    </div>
+                {% endif %}
+                {% if form.renewed_certificate.errors %}
+                    <div class="error-message">
+                        {% for error in form.renewed_certificate.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-field-inline">
+                <label for="id_request_complete">Request Complete</label>
+                {{ form.request_complete }}
+                {% if form.request_complete.errors %}
+                    <div class="error-message">
+                        {% for error in form.request_complete.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit">Submit Renewal</button>
+        </form>
+    </div>
+</body>
+</html>
